@@ -72,29 +72,32 @@
     </form>
   </div>
 
-  <script>
-    const contactForm = document.getElementById('contactForm');
-    const WEBHOOK_URL = "https://hook.us2.make.com/clyawv8xpbwckmc5ujsjupcg4fodi0pg";
-    const REDIRECT_URL = "https://aimsdelivers.clickfunnels.com/pharmaceuticalswmkbmnhp";
+<script>
+  const contactForm = document.getElementById('contactForm');
+  const WEBHOOK_URL = "https://hook.us2.make.com/clyawv8xpbwckmc5ujsjupcg4fodi0pg";
+  const REDIRECT_URL = "https://aimsdelivers.clickfunnels.com/pharmaceuticalswmkbmnhp";
 
-    contactForm.addEventListener('submit', async function(e){
-      e.preventDefault();
+  contactForm.addEventListener('submit', async function(e){
+    e.preventDefault();
 
-      const formData = new FormData(contactForm);
-      const data = {};
-      formData.forEach((v, k) => data[k] = v);
+    const formData = new FormData(contactForm);
+    const data = {};
+    formData.forEach((v, k) => data[k] = v);
 
-      try {
-        await fetch(WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
-        window.location.href = REDIRECT_URL; // ✅ redirect after success
-      } catch (err) {
-        alert("Error submitting form. Please try again.");
-      }
-    });
-  </script>
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      // ✅ force full page redirect, not iframe
+      window.top.location.href = REDIRECT_URL;
+    } catch (err) {
+      alert("Error submitting form. Please try again.");
+    }
+  });
+</script>
+
 </body>
 </html>
+
