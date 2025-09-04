@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .contact-box {
+      max-width: 500px;
+      width: 100%;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    h2 {
+      color: #0b8c99;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    input {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      width: 100%;
+    }
+    button {
+      background: #0b8c99;
+      color: #fff;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #09747f;
+    }
+  </style>
+</head>
+<body>
+  <div class="contact-box" id="contact">
+    <h2>Get in Touch</h2>
+    <p>Fill out your details and we’ll get back to you shortly.</p>
+
+    <form id="contactForm">
+      <input type="text" name="fullName" placeholder="Full Name *" required>
+      <input type="email" name="email" placeholder="Email Address *" required>
+      <input type="tel" name="phone" placeholder="Phone Number">
+      <input type="text" name="company" placeholder="Company Name">
+      <input type="text" name="jobTitle" placeholder="Job Title">
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    const contactForm = document.getElementById('contactForm');
+    const WEBHOOK_URL = "https://hook.us2.make.com/clyawv8xpbwckmc5ujsjupcg4fodi0pg";
+    const REDIRECT_URL = "https://aimsdelivers.clickfunnels.com/pharmaceuticalswmkbmnhp";
+
+    contactForm.addEventListener('submit', async function(e){
+      e.preventDefault();
+
+      const formData = new FormData(contactForm);
+      const data = {};
+      formData.forEach((v, k) => data[k] = v);
+
+      try {
+        await fetch(WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+        window.location.href = REDIRECT_URL; // ✅ redirect after success
+      } catch (err) {
+        alert("Error submitting form. Please try again.");
+      }
+    });
+  </script>
+</body>
+</html>
