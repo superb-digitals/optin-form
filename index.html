@@ -96,17 +96,6 @@
   });
 </script>
 
-  <script>
-  function sendHeight() {
-    const height = document.body.scrollHeight;
-    window.parent.postMessage({ iframeHeight: height }, "*");
-  }
-
-  // Send height on load and whenever window resizes
-  window.addEventListener("load", sendHeight);
-  window.addEventListener("resize", sendHeight);
-</script>
-
-
 </body>
 </html>
+
