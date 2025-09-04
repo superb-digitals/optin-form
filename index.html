@@ -5,14 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Form</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
+    html, body {
       margin: 0;
-      padding: 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      padding: 0;
+      background: transparent; /* ✅ transparent background */
+      font-family: Arial, sans-serif;
     }
     .contact-box {
       max-width: 500px;
@@ -21,6 +18,7 @@
       padding: 2rem;
       border-radius: 12px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      margin: 0 auto; /* center horizontally */
     }
     h2 {
       color: #0b8c99;
@@ -98,6 +96,17 @@
   });
 </script>
 
+  <script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    window.parent.postMessage({ iframeHeight: height }, "*");
+  }
+
+  // Send height on load and whenever window resizes
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
 </body>
 </html>
-
