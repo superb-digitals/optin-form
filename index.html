@@ -8,7 +8,7 @@
     html, body {
       margin: 0;
       padding: 0;
-      background: transparent; /* ✅ transparent background */
+      background: transparent;
       font-family: Arial, sans-serif;
       box-sizing: border-box;
     }
@@ -20,7 +20,7 @@
       padding: 2rem;
       border-radius: 12px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-      margin: 0 auto; /* ✅ center horizontally */
+      margin: 0 auto;
       box-sizing: border-box;
     }
 
@@ -78,17 +78,32 @@
     <form id="contactForm">
       <input type="text" name="fullName" placeholder="Full Name *" required>
       <input type="email" name="email" placeholder="Email Address *" required>
-      <input type="tel" name="phone" placeholder="Phone Number">
-      <input type="text" name="company" placeholder="Company Name">
-      <input type="text" name="jobTitle" placeholder="Job Title">
+      <input type="tel" name="phone" placeholder="Phone Number (US only)" required>
       <button type="submit">Yes! I Want My Free Training</button>
     </form>
   </div>
 
 <script>
   const contactForm = document.getElementById('contactForm');
+  const phoneInput = contactForm.querySelector('input[name="phone"]');
   const WEBHOOK_URL = "https://hook.us2.make.com/clyawv8xpbwckmc5ujsjupcg4fodi0pg";
   const REDIRECT_URL = "https://aimsdelivers.clickfunnels.com/optinz1mqngg8";
+
+  // ✅ Auto-format US phone number with +1
+  phoneInput.addEventListener("input", function(e) {
+    let value = e.target.value.replace(/\D/g, ""); // remove all non-digits
+    if (value.startsWith("1")) {
+      value = value.substring(1); // prevent double 1
+    }
+
+    // Format: +1 XXX XXX XXXX
+    let formatted = "+1";
+    if (value.length > 0) formatted += " " + value.substring(0,3);
+    if (value.length >= 4) formatted += " " + value.substring(3,6);
+    if (value.length >= 7) formatted += " " + value.substring(6,10);
+
+    e.target.value = formatted;
+  });
 
   contactForm.addEventListener('submit', async function(e){
     e.preventDefault();
@@ -112,6 +127,3 @@
 </script>
 </body>
 </html>
-
-
-
